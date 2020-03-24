@@ -29,7 +29,11 @@ export default class SingleTodo extends Component {
     return (
       <div id='single-todo'>
         <Todo todo={todo} />
-        <UpdateTodo id={this.state.todo.id} updateState={this.updateState}/>
+        {
+          todo.taskName
+          ? <UpdateTodo id={this.state.todo.id} updateState={this.updateState} toDo={this.state.todo}/>
+          : null
+        }
         <Link to='/'>Back</Link>
       </div>
     )

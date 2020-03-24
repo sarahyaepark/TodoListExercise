@@ -8,7 +8,8 @@ export default class CreateTodo extends Component {
     super(props);
     this.state = {
       taskName: '',
-      assignee: ''
+      assignee: '',
+      error: false
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -16,14 +17,21 @@ export default class CreateTodo extends Component {
   }
 
   async postData() {
-    const res = await axios.post('/api/todos', this.state)
-    this.props.addTodo(res.data)
-
+    try{
+      const res = await axios.post('/api/todos', this.state)
+      this.props.addTodo(res.data)
+    }catch (err) {
+      this.setState({error: true});
+    }
   }
 
   handleSubmit (event) {
     event.preventDefault();
     this.postData();
+    this.setState({
+      taskName:'',
+      assignee: ''
+    })
   }
 
   handleChange (event) {

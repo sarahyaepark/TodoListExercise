@@ -6,8 +6,9 @@ export default class UpdateTodo extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      taskName: '',
-      assignee: ''
+      taskName: props.toDo.taskName || '',
+      assignee: props.toDo.assignee || '',
+      error: false
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -15,9 +16,13 @@ export default class UpdateTodo extends Component {
   }
 
   async putTodo(id) {
-    const res = await axios.put(`/api/todos/${id}`, this.state);
-    this.props.updateState({todo: {taskName: res.data.taskName, assignee: res.data.assignee}})
+    try {
+      const res = await axios.put(`/api/todos/${id}`, this.state);
+      this.props.updateState({todo: {taskName: res.data.taskName, assignee: res.data.assignee}})
+    } catch (err) {
+      this.setState({error: true});
     }
+  }
 
   handleSubmit (event) {
     event.preventDefault();

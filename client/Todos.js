@@ -16,15 +16,14 @@ export default class Todos extends Component {
     this.setState( {todos: [...this.state.todos , todo] } )
   }
   async removeTodo(id) {
-    console.log(id);
     const res = await axios.delete(`/api/todos/${id}`);
     this.setState({todos: [...this.state.todos].filter(todo => {
       if(todo.id!==id) return todo;
     })})
   }
   async componentDidMount () {
-    const res = await axios.get('/api/todos')
-    this.setState({todos: res.data})
+    {const res = await axios.get('/api/todos')
+    this.setState({todos: res.data})}
   }
 
   render () {
