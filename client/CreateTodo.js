@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import axios from "axios";
+import TodoForm from './TodoForm'
+
 
 export default class CreateTodo extends Component {
   constructor (props) {
@@ -8,7 +10,6 @@ export default class CreateTodo extends Component {
       taskName: '',
       assignee: ''
     }
-
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.postData = this.postData.bind(this);
@@ -33,15 +34,7 @@ export default class CreateTodo extends Component {
 
   render () {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label htmlFor="taskName">Task Name:</label>
-        <input type="text" name="taskName" value={this.state.taskName} onChange={this.handleChange}></input>
-
-        <label htmlFor="assignee">Assign To:</label>
-        <input type="text" name="assignee" value={this.state.assignee} onChange={this.handleChange}></input>
-
-        <button type="submit">Submit</button>
-      </form>
+      <TodoForm state={this.state} handleSubmit={this.handleSubmit} handleChange={this.handleChange}/>
     )
   }
 }
